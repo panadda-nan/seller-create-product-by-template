@@ -183,7 +183,7 @@ test.describe("add successfully product", () => {
             await specification.selectBrand(page);
             await specification.selectApplicationArea(page);
             await specification.selectManufacturingCount(page);
-            await specification.selectSellUnit(page);
+            await specification.selectSellUnit(page,category);
             
             await specification.selectProductOptionNo(page);
             await specification.addAllMetadataIfSelectNo(page,workbook,filePath,allSheetName[i],lang);
