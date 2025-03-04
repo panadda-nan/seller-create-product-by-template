@@ -7,7 +7,7 @@ export async function inputPriceSale(page) {
     await page.locator('input[name="productVariants.1.priceAndSale.price"]').first().type('2222.56');
 
     await page.locator('tr.Table-module__tr--McqeC:nth-child(2) td:nth-child(4)').nth(0).click();
-    await page.getByRole('option', { name: 'สินค้าสั่งผลิต'}).click();
+    await page.getByRole('option', { name: 'สินค้าสั่งผลิต/พรีออเดอร์'}).click();
 
     //await page.locator('tr.Table-module__tr--McqeC:nth-child(4) td:nth-child(4)').nth(1).click();
     
@@ -19,10 +19,10 @@ export async function inputPriceSale(page) {
     .locator('td.Table-module__td--AvfkC.Table-module__noPadding--hCd0t')
     .click();
     
-    await page.getByRole('option', { name: 'พร้อมขาย'}).click();
+    await page.getByRole('option', { name: 'พร้อมจำหน่าย'}).click();
 
-    await page.getByPlaceholder('กรอกระยะเวลา').nth(0).type('63');
-    await page.getByPlaceholder('กรอกระยะเวลา').nth(1).type('7');
+    await page.getByTestId('preparationTime[0]').type('63');
+    //await page.getByPlaceholder('กรอกระยะเวลา').nth(1).type('7');
     await page.screenshot({ path: 'test-results/inputPrice.png', fullPage: true });
 
 }
@@ -33,7 +33,7 @@ export async function inputPriceSaleNoVariant(page,productCode) {
     await page.locator('input[name="productVariants.0.priceAndSale.price"]').first().type('5656.66');
 
     await page.locator('tr.Table-module__tr--McqeC:nth-child(1) td:nth-child(2)').nth(0).click();
-    await page.getByRole('option', { name: 'สินค้าสั่งผลิต'}).click();
+    await page.getByRole('option', { name: 'สินค้าสั่งผลิต/พรีออเดอร์'}).click();
 
     await page.getByPlaceholder('กรอกระยะเวลา').nth(0).type('63');
     await page.getByPlaceholder('กรอกโค้ดสินค้า').nth(0).scrollIntoViewIfNeeded();
