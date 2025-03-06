@@ -656,11 +656,11 @@ export async function addAllMetadata(
 export async function clickPriceInventBtn(page) {
     await page
         .getByRole('button')
-        .getByText('ราคาและสินค้าคงคลัง')
+        .getByText('ราคาและสต็อกสินค้า')
         .scrollIntoViewIfNeeded()
     await page
         .getByRole('button')
-        .getByText('ราคาและสินค้าคงคลัง')
+        .getByText('ราคาและสต็อกสินค้า')
         .click()
 }
 
