@@ -1,7 +1,11 @@
 import { request } from '@playwright/test';
 import { test, expect } from '@playwright/test';
+import { Buffer } from "buffer";
 
 export async function queryESCategoryIndex(categoryDetail) {
+  const username = "kantaphit_ru"; 
+  const password = "GB8Y75tG)o(2Zc-I"; 
+  const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`;
   const requestBody = {
     query: {
       match: {
@@ -15,13 +19,14 @@ export async function queryESCategoryIndex(categoryDetail) {
 
   const apiRequest = await request.newContext({
     extraHTTPHeaders: {
+      'Authorization': authHeader,
       'Content-Type': 'application/json',
     },
   });
 
   // ส่งคำขอ POST ไปยัง API
   const response = await apiRequest.post(
-    'https://qa.nocnoc-internal.com/elastic-proxy/product_category/_search',
+    'https://vpc-nocnoc-nonprod-os-data-blb3wnym55xediwt3i332ia6ia.ap-southeast-1.es.amazonaws.com/qa.product_category/_search',
     {
       data: requestBody, // ข้อมูลที่ส่งไป
     }
@@ -38,6 +43,9 @@ export async function queryESCategoryIndex(categoryDetail) {
 }
 
 export async function queryESCProductIndex(sku) {
+  const username = "kantaphit_ru"; 
+  const password = "GB8Y75tG)o(2Zc-I"; 
+  const authHeader = `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`;
     const requestBody = {
         query: {
             terms: {
@@ -48,13 +56,14 @@ export async function queryESCProductIndex(sku) {
     
     const apiRequest = await request.newContext({
       extraHTTPHeaders: {
+        'Authorization': authHeader,
         'Content-Type': 'application/json',
       },
     });
   
     // ส่งคำขอ POST ไปยัง API
     const response = await apiRequest.post(
-      'https://qa.nocnoc-internal.com/elastic-proxy/scg_es_product_th/_search',
+      'https://vpc-nocnoc-nonprod-os-data-blb3wnym55xediwt3i332ia6ia.ap-southeast-1.es.amazonaws.com/qa.scg_es_product_th/_search',
       {
         data: requestBody, // ข้อมูลที่ส่งไป
       }

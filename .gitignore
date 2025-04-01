@@ -1,0 +1,35 @@
+# Playwright user data & traces
+playwright-report/
+playwright/.cache/
+test-results/
+test-cases/add-product/test-results
+
+# โฟลเดอร์ dependencies
+node_modules/
+bower_components/
+
+# ไฟล์ build และ output
+dist/
+build/
+coverage/
+.nyc_output/
+
+# Env & Secrets
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# ไฟล์ระบบและไฟล์ที่สร้างโดย OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ไฟล์ log และ cache
+*.log
+*.tmp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
