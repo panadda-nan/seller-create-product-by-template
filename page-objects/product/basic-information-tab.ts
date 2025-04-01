@@ -28,7 +28,7 @@ export async function selectCategory(page,category){
 }
 
 export async function addProductDescription(page,category){
-    const descriptionLocator = page.locator('.rdw-editor-main');
+    const descriptionLocator = page.locator('.tiptap');
     await descriptionLocator.waitFor({ state: 'visible' });
     await descriptionLocator.click();
     // await descriptionLocator.waitFor({ state: 'visible' });
