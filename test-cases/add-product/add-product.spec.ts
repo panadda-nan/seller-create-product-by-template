@@ -15,6 +15,7 @@ import { url } from '../../test-data/url.ts'
 
 const env = 'QA'
 //const env = ''
+const a = 'a'
 let filePath
 let userName,password,sellerName
 
