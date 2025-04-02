@@ -88,10 +88,15 @@ export async function verifyESCategory(categoryDetail) {
 export async function verifyESProduct(categoryDetail,sku) {
     const skuLists = sku.map(e=>e.sku)
     const apiData = await queryESCProductIndex(skuLists)
-    apiData.map(e=>{
-        const data = e._source
-        expect(data.primaryCategoryName_en).toEqual(categoryDetail.name_en);
-        expect(data.primaryCategoryName_th).toEqual(categoryDetail.name);
-        expect(String(data.primaryCategory.o_id[0])).toEqual(categoryDetail.category_code);
+    if (apiData.length === 0) {
+      console.error('API returned empty data:', apiData);
+      throw new Error('API response is empty!');
+    } else {
+      apiData.map(e=>{
+      const data = e._source
+      expect(data.primaryCategoryName_en).toEqual(categoryDetail.name_en);
+      expect(data.primaryCategoryName_th).toEqual(categoryDetail.name);
+      expect(String(data.primaryCategory.o_id[0])).toEqual(categoryDetail.category_code);
     })
+    }
 }
