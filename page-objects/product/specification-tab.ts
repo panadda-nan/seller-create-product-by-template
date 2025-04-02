@@ -130,7 +130,7 @@ export async function addProductOptionValue(page, lang,category) {
     // const optionName2 = lang === 'th' ? 'ขนาด' : 'Size';
     // await page.getByRole('option', { name: optionName2 }).click();
 
-    await page.click(`[data-testid="ขนาด"], [data-testid="Size"], [data-testid="ไซส์"]`)
+    await page.click(`[data-testid="ขนาด"], [data-testid="Size"], [data-testid="ไซส์"], [data-testid="สไตล์"]`)
     //wait page.getByRole('option', { name: 'ขนาด' || 'Size'}).click();
 
     await page
