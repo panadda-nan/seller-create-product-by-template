@@ -130,7 +130,7 @@ export async function addProductOptionValue(page, lang,category) {
     // const optionName2 = lang === 'th' ? 'ขนาด' : 'Size';
     // await page.getByRole('option', { name: optionName2 }).click();
 
-    await page.click(`[data-testid="ขนาด"], [data-testid="Size"]`)
+    await page.click(`[data-testid="ขนาด"], [data-testid="Size"], [data-testid="ไซส์"], [data-testid="สไตล์"]`)
     //wait page.getByRole('option', { name: 'ขนาด' || 'Size'}).click();
 
     await page
@@ -495,67 +495,114 @@ export async function addAllMetadata(
             }
 
             if (metadataType === 'Multi-Selective' && level === 'Variant') {
-
-                await page
-                    .getByTestId(`${columnData[11].trim()}`)
+                for (let j = 0; j < variantNumber; j++) {
+                    await page
+                    .getByTestId(`${columnData[11].trim()}`+`[${j}]`)
                     .first()
                     .scrollIntoViewIfNeeded()
-                await page
-                    .getByTestId(`${columnData[11].trim()}`)
+                    await page
+                    .getByTestId(`${columnData[11].trim()}`+`[${j}]`)
                     .first()
                     .click()
-                const listBoxItems = await page.$$(`[role="listbox"] li`) // Adjust the selector based on your HTML structure
-                await listBoxItems[0].click()
 
-                // verify data in dropdown
-                let rowIndex = 16;  // Excel rows start at index 1
-                let expectedLists: string[] = [];
-                while (true) {
-                    const cell = columnData[rowIndex];  // Read the first column of the current row                
-                    if (!cell) {  // Check if the cell is empty or undefined
-                    break;
-                    }               
-                    expectedLists.push(cell);
-                    rowIndex++;
-                }
 
-                const options = await page.locator('li[data-testid]').evaluateAll(items => 
-                    items.map(item => item.textContent.trim())
-                );
-                expect(options.length).toEqual(expectedLists.length);
-                const expectedListsSorted = expectedLists.sort()
-                const actualListsSorted = options.sort()
-                expect(expectedListsSorted).toEqual(actualListsSorted);
-                console.log('Verify Multi Selective Varint Element Pass')
+                   // verify data in dropdown
+                   let rowIndex = 16;  // Excel rows start at index 1
+                   let expectedLists: string[] = [];
+                   while (true) {
+                       const cell = columnData[rowIndex];  // Read the first column of the current row                
+                       if (!cell) {  // Check if the cell is empty or undefined
+                       break;
+                       }               
+                       expectedLists.push(cell);
+                       rowIndex++;
+                   }
 
-                await page
+                   const options = await page.locator('li[data-testid]').evaluateAll(items => 
+                       items.map(item => item.textContent.trim())
+                   );
+                   expect(options.length).toEqual(expectedLists.length);
+                   const expectedListsSorted = expectedLists.sort()
+                   const actualListsSorted = options.sort()
+                   expect(expectedListsSorted).toEqual(actualListsSorted);
+                   console.log('Verify Selective Variant Element Pass')
+
+
+                    const listBoxItems = await page.$$(`[role="listbox"] li`) // Adjust the selector based on your HTML structure
+                    await listBoxItems[0].click()
+                    await page
                     .locator('thead.Table-module__thead--E9YE2')
                     .nth(1)
                     .click()
+                //await page.getByRole('option', { name: columnData[index],exact: true}).first().click();
+                // await page.getByTestId(`${columnData[index].trim()}`, { exact: true }).nth(0).scrollIntoViewIfNeeded();
+                // await page.getByTestId(`${columnData[index].trim()}`, { exact: true }).nth(0).click();
                 await page.screenshot({
-                    path: `test-results/${category}/screenshot-C2-3.png`,
+                    path: `test-results/${category}/metadata-selective-Variant-${j}.png`,
                     fullPage: true,
                 })
+            }
+
+                // await page
+                //     .getByTestId(`${columnData[11].trim()}`)
+                //     .first()
+                //     .scrollIntoViewIfNeeded()
+                // await page
+                //     .getByTestId(`${columnData[11].trim()}`)
+                //     .first()
+                //     .click()
+                // const listBoxItems = await page.$$(`[role="listbox"] li`) // Adjust the selector based on your HTML structure
+                // await listBoxItems[0].click()
+
+                // // verify data in dropdown
+                // let rowIndex = 16;  // Excel rows start at index 1
+                // let expectedLists: string[] = [];
+                // while (true) {
+                //     const cell = columnData[rowIndex];  // Read the first column of the current row                
+                //     if (!cell) {  // Check if the cell is empty or undefined
+                //     break;
+                //     }               
+                //     expectedLists.push(cell);
+                //     rowIndex++;
+                // }
+
+                // const options = await page.locator('li[data-testid]').evaluateAll(items => 
+                //     items.map(item => item.textContent.trim())
+                // );
+                // expect(options.length).toEqual(expectedLists.length);
+                // const expectedListsSorted = expectedLists.sort()
+                // const actualListsSorted = options.sort()
+                // expect(expectedListsSorted).toEqual(actualListsSorted);
+                // console.log('Verify Multi Selective Varint Element Pass')
+
+                // await page
+                //     .locator('thead.Table-module__thead--E9YE2')
+                //     .nth(1)
+                //     .click()
+                // await page.screenshot({
+                //     path: `test-results/${category}/screenshot-C2-3.png`,
+                //     fullPage: true,
+                // })
 
 
-                await page
-                    .getByTestId(`${columnData[11].trim()}`)
-                    .nth(1)
-                    .scrollIntoViewIfNeeded()
-                await page
-                    .getByTestId(`${columnData[11].trim()}`)
-                    .nth(1)
-                    .click()
-                const listBoxItems2 = await page.$$(`[role="listbox"] li`) // Adjust the selector based on your HTML structure
-                await listBoxItems2[0].click()
-                await page
-                    .locator('thead.Table-module__thead--E9YE2')
-                    .nth(1)
-                    .click()
-                await page.screenshot({
-                    path: `test-results/${category}/screenshot-C2-4.png`,
-                    fullPage: true,
-                })
+                // await page
+                //     .getByTestId(`${columnData[11].trim()}`)
+                //     .nth(1)
+                //     .scrollIntoViewIfNeeded()
+                // await page
+                //     .getByTestId(`${columnData[11].trim()}`)
+                //     .nth(1)
+                //     .click()
+                // const listBoxItems2 = await page.$$(`[role="listbox"] li`) // Adjust the selector based on your HTML structure
+                // await listBoxItems2[0].click()
+                // await page
+                //     .locator('thead.Table-module__thead--E9YE2')
+                //     .nth(1)
+                //     .click()
+                // await page.screenshot({
+                //     path: `test-results/${category}/screenshot-C2-4.png`,
+                //     fullPage: true,
+                // })
             }
 
             if (metadataType === 'Integer' && level === 'Product') {

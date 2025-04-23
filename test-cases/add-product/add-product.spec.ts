@@ -7,6 +7,8 @@ import * as priceInvent from '../../page-objects/product/price-inventory-tab.ts'
 import * as imageVideo from '../../page-objects/product/image-vdo-tab.ts';
 import * as dimension from '../../page-objects/product/dimension-tab.ts';
 import * as warranty from '../../page-objects/product/warranty-tab.ts';
+import * as database from '../../page-objects/product/database.ts';
+import * as api from '../../page-objects/common/api.ts';
 import { genProductName } from '../../utils/productName.ts';
 import { generateProductCode } from '../../utils/productCode.ts';
 import { test } from '../../test-config.ts';
@@ -19,12 +21,12 @@ let filePath
 let userName,password,sellerName
 
 if (env === 'QA'){
-  filePath = '../../test-data/TSELL-1126-Mattresses-Bedding-qa-2.xlsx'; // Replace with your Excel file path
+  filePath = '../../test-data/TSELL-1263-Lighting-Lamps-Light-Bulbs-test.xlsx'; // Replace with your Excel file path
   userName = 'automate.bot12@gmail.com';
   password = 'Test1234!';
   sellerName = 'boobobkob'
 } else {
-  filePath = '../../test-data/TSELL-1126-Mattresses-Bedding-prod.xlsx'; // Replace with your Excel file path
+  filePath = '../../test-data/TSELL-1192-Outdoor-Spaces-Activities-prod-test.xlsx'; // Replace with your Excel file path
   userName = 'automate.bot12@gmail.com';
   password = 'Prod98765!';
   sellerName = 'TestProd1'
@@ -127,12 +129,17 @@ test.describe("add successfully product", () => {
           await productsPage.clickSubmitBtn(page);
           await productsPage.clickConfirmModal(page);
           await productsPage.verifySummittedProduct(page);
-          await page.waitForTimeout(3000);
+          await page.waitForTimeout(9000);
 
-          console.log('Add product successfully.');
+          // console.log('Add product successfully.');
 
+          /** Verify DB */
+          const categoryDetail = await database.verifyCategoryInDatabase(productName,category);
+          const sku = await database.getSKUProduct(productName);
+          /** Verify OS */
+          await api.verifyESCategory(categoryDetail);
+          await api.verifyESProduct(categoryDetail,sku);
       }
-
   });
 
 
